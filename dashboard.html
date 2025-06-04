@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serve A Bite | Partner Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #ffc221;
+            --secondary: #4ECDC4;
+            --dark: #292F36;
+            --light: #F7FFF7;
+            --accent: #FFE66D;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #f8fafc;
+            color: var(--dark);
+            margin: 0;
+            padding: 0;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background: var(--dark);
+            color: white;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sidebar::after {
+            content: "";
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: var(--primary);
+            opacity: 0.1;
+            border-radius: 50%;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo i {
+            color: var(--primary);
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.1);
+            transform: translateX(5px);
+        }
+        
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Dashboard Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+        
+        .card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .card h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--dark);
+        }
+        
+        .card .value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+            color: var(--dark);
+        }
+        
+        .card .trend {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .trend.up {
+            color: #4CAF50;
+        }
+        
+        .trend.down {
+            color: #F44336;
+        }
+        
+        /* Impact Visualization */
+        .impact-viz {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .impact-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(78, 205, 196, 0.1);
+        }
+        
+        .metric-item .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin: 0.5rem 0;
+        }
+        
+        .metric-item .label {
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+        
+        /* Recent Activity */
+        .activity-feed {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .activity-item {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 107, 107, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+        
+        .activity-details {
+            flex: 1;
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: #888;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                Serve A Bite
+            </div>
+            
+            <nav>
+                <div class="nav-item active">
+                    <i class="fas fa-tachometer-alt"></i>
+                    Dashboard
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    Analytics
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-calendar-check"></i>
+                    Schedule Pickup
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-history"></i>
+                    History
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-certificate"></i>
+                    Certificates
+                </div>
+                <div class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    Settings
+                </div>
+            </nav>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Partner Dashboard</h1>
+                <div class="user-profile">
+                    <div class="avatar">SS</div>
+                    <div>
+                        <div class="name"><b>Subhash Sharma</b></div>
+                        <div class="role">Hyaat Resigency</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Stats Cards -->
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Total Meals Donated</h3>
+                    <div class="value">1,248</div>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        12% from last month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Waste Diverted</h3>
+                    <div class="value">542 kg</div>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        8% from last month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Cost Savings</h3>
+                    <div class="value">₹24,960</div>
+                    <div class="trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        15% from last month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Next Pickup</h3>
+                    <div class="value">Tomorrow</div>
+                    <div class="trend">
+                        <i class="fas fa-clock"></i>
+                        10:00 AM - 12:00 PM
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Impact Visualization -->
+            <div class="impact-viz">
+                <div class="impact-header">
+                    <h2>Your Impact</h2>
+                    <button>View Full Report</button>
+                </div>
+                
+                <div class="impact-metrics">
+                    <div class="metric-item">
+                        <div class="label">People Fed</div>
+                        <div class="number">1,248</div>
+                        <div class="label">Equivalent to 416 meals/day</div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="label">CO₂ Reduced</div>
+                        <div class="number">1.2T</div>
+                        <div class="label">Like planting 28 trees</div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="label">Water Saved</div>
+                        <div class="number">325k L</div>
+                        <div class="label">6 months of drinking water</div>
+                    </div>
+                    
+                    <div class="metric-item">
+                        <div class="label">Partner Since</div>
+                        <div class="number">8 mo</div>
+                        <div class="label">Joined March 2023</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="activity-feed">
+                <h2>Recent Activity</h2>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-text">Your donation was delivered to Sunshine Orphanage</div>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-calendar"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-text">Pickup scheduled for tomorrow at 10:00 AM</div>
+                        <div class="activity-time">1 day ago</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-text">New monthly impact report available</div>
+                        <div class="activity-time">3 days ago</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-text">You earned the "Zero Waste Hero" badge</div>
+                        <div class="activity-time">1 week ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

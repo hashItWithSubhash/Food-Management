@@ -1,0 +1,110 @@
+<!-- How It Works -->
+   <div class="how-it-works">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="title">
+                  <h2>Our <strong class="black">Business Model</strong></h2>
+               </div>
+            </div>
+         </div>
+         <div class="row process-steps">
+            <div class="col-md-4">
+               <div class="step">
+                  <div class="step-number">1</div>
+                  <h3>Businesses Pay for Waste Solutions</h3>
+                  <p>Hotels, caterers and event venues pay us to handle their surplus food responsibly through subscription plans or per-pickup fees.</p>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="step">
+                  <div class="step-number">2</div>
+                  <h3>We Redistribute Edible Food</h3>
+                  <p>Our logistics network delivers quality food to orphanages, shelters and communities in need within hours.</p>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="step">
+                  <div class="step-number">3</div>
+                  <h3>Non-Edible Waste Generates Revenue</h3>
+                  <p>What can't be eaten gets converted to compost or biogas, creating additional income streams.</p>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- Partners Section -->
+   <div class="partners-section">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <div class="title">
+                  <h3>Trusted By</h3>
+               </div>
+               <div class="partner-logos">
+                  <img src="images/partner1.png" alt="Hotel Partner">
+                  <img src="images/partner2.png" alt="Restaurant Partner">
+                  <img src="images/partner3.png" alt="Corporate Partner">
+                  <img src="images/partner4.png" alt="Event Partner">
+               </div>
+            </div>
+         </div>
+      </div>
+   </div> 
+
+
+
+
+
+
+   /* How It Works */
+.process-steps {
+   margin-top: 50px;
+}
+
+.step {
+   background: white;
+   padding: 30px;
+   border-radius: 8px;
+   height: 100%;
+   box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+   position: relative;
+}
+
+.step-number {
+   position: absolute;
+   top: -25px;
+   left: 30px;
+   background: #ffc107;
+   color: white;
+   width: 50px;
+   height: 50px;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 24px;
+   font-weight: bold;
+}
+
+/* Partners */
+.partner-logos {
+   display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+   gap: 30px;
+   margin-top: 30px;
+}
+
+.partner-logos img {
+   height: 60px;
+   filter: grayscale(100%);
+   opacity: 0.7;
+   transition: all 0.3s ease;
+}
+
+.partner-logos img:hover {
+   filter: grayscale(0);
+   opacity: 1;
+}
